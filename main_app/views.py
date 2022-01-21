@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.forms import ModelForm
+from django.shortcuts import render, redirect
 from .models import Widget
 from django.views.generic import CreateView
 from .forms import WidgetForm
@@ -7,13 +8,14 @@ from .forms import WidgetForm
 
 def index(request):
      widgets = Widget.objects.all()
-     return render(request, 'index.html', {'widgets': widgets})
+     widget_form = WidgetForm()
+     return render(request, 'index.html', { 'widgets': widgets, 'widget_form': widget_form})
 
-class WidgetCreate(CreateView):
-    model = Widget
-    fields = '__all__'
-    success_url = '/'
+def add_widget(request):
+    widget_form = WidgetForm(request.POST)
+    widget_form.save()
+    return redirect('/')
 
-def widget_form(request):
-    widget_form = WidgetForm()
-    return render(request, 'index.html', {'widget_form': widget_form})
+def delete_widget(request, widget_id):
+    Widget.objects.get(id=widget_id).delete()
+    return redirect('/')

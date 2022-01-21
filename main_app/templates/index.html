@@ -10,26 +10,36 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Assessment #3</title>
 </head>
-<body>
+<body style="text-align: center; margin: 2rem;">
     <h1>Wacky Widgets</h1>
-    {% for widget in widgets %}
-        <h5> {{ widget.description }} </h5>
-    {% empty %} 
+        {% if widgets|length == 0 %}
         <h4> No Widgets Exist </h4>
-    {% endfor %} 
-
+        {% else %}
+        <table class="pure table pure-table-striped" style="margin: 2rem auto;">
+            <thead> 
+                 <tr>
+                     <th> Description </th>
+                     <th> Quantity </th>
+                     <th> Delete </th>
+                 </tr>
+             </thead> 
+        {% for widget in widgets %}
+        <tr>
+            <td> {{ widget.description }} </td>
+            <td> {{ widget.quantity }} </td>
+            <td><a href="{% url 'delete_widget' widget.id %}" style="color: red;
+                text-decoration: none;">X</a></td>
+        </tr>
+        {% endfor %}
+        {% endif %} 
+    </table>
     <hr>
-
     <h4> Add Widget </h4> 
-    <form action="" class='pure-form' method=POST>
+    <form action="{% url 'add_widget' %}" class='pure-form' method="POST">
         {% csrf_token %} 
         {{ widget_form.as_p }}
-        <input type='text' placeholder="Widget Name">
-        <br>
-        <input type='number' placeholder="Quantity">
         <br>
         <button type='submit' class='pure-button'> Add Widget </button>
-
     </form>
 </body>
 </html>
