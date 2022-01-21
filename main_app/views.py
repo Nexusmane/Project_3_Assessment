@@ -1,15 +1,15 @@
 from django.shortcuts import render
-from .models import
+from .models import Widget
 from django.views.generic import CreateView
 
 # Create your views here.
 
 def index(request):
-     = .object.all()
-     return render(request, 'index.html', {'': })
+     widgets = Widget.objects.all()
+     return render(request, 'index.html', { 'widgets': widgets })
 
 
-class Create(CreateView):
-    model = 
+class WidgetCreate(CreateView):
+    model = Widget
     fields = '__all__'
     success_url = '/'
