@@ -19,5 +19,17 @@
     {% endfor %} 
 
     <hr>
+
+    <h4> Add Widget </h4> 
+    <form action="" class='pure-form' method=POST>
+        {% csrf_token %} 
+        {{ widget_form.as_p }}
+        <input type='text' placeholder="Widget Name">
+        <br>
+        <input type='number' placeholder="Quantity">
+        <br>
+        <button type='submit' class='pure-button'> Add Widget </button>
+
+    </form>
 </body>
 </html>
